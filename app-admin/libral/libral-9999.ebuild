@@ -26,6 +26,9 @@ DEPEND="dev-cpp/yaml-cpp
 RDEPEND="${DEPEND}"
 
 src_configure() {
+	local mycmakeargs=(
+		-DLIBRAL_DATA_DIR=/usr/share/libral
+	)
 	cmake-utils_src_configure
 }
 
