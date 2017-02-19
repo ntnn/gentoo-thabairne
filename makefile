@@ -1,7 +1,10 @@
-packages ?= $(shell find . -mindepth 2 -type d -not -path '*/.git/*')
+PACKAGES ?= $(shell find . -mindepth 2 -type d -not -path '*/.git/*')
+MANIFESTS ?= $(patsubst %, %/Manifest, $(PACKAGES))
 
-manifests:
-	for d in $(packages); do cd $$d; repoman manifest; cd -; done
+default: $(MANIFESTS)
+
+%/Manifest: $(wildcard $(@D)/*.ebuild)
+	cd $(@D); repoman manifest
 
 clean:
 	find . -name Manifest -delete
