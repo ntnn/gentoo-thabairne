@@ -19,3 +19,8 @@ commit:
 
 clean:
 	find . -name Manifest -delete
+
+print:
+	@echo EBUILDS: $(EBUILDS)
+	@echo DIRS: $(DIRS)
+	@echo MANIFESTS: $(MANIFESTS)
