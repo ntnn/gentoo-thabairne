@@ -12,5 +12,10 @@ default: $(MANIFESTS)
 	# reexcutes the recipe each time.
 	cd $(@D); repoman manifest; touch Manifest
 
+commit:
+	repoman scan
+	repoman full
+	repoman commit
+
 clean:
 	find . -name Manifest -delete
