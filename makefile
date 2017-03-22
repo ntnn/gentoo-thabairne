@@ -13,7 +13,6 @@ default: $(MANIFESTS)
 	cd $(@D); repoman manifest; touch Manifest
 
 commit:
-	repoman scan
 	repoman full
 	repoman commit
 
