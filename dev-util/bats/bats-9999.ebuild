@@ -20,6 +20,10 @@ src_prepare() {
 	epatch "${FILESDIR}/0001-Allow-sourcing-of-helper-files-from-BATS_LIB_PATH.patch"
 }
 
+src_test() {
+	bin/bats --tap test
+}
+
 src_install() {
 	doman $(find man -type f -name 'bats*.?')
 
