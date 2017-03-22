@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="app-shells/bash
-		>=dev-util/bats-0.4.0"
+		dev-util/bats[bats_lib_path]"
 RDEPEND="${DEPEND}"
 
 src_test() {
