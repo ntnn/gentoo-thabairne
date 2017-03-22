@@ -1,0 +1,80 @@
+From af25c925a71bc5f9bfb7b7c32f1c67b9cf026ae9 Mon Sep 17 00:00:00 2001
+From: Nelo Wallus <nelo@wallus.de>
+Date: Wed, 22 Mar 2017 15:27:15 +0100
+Subject: [PATCH] Allow sourcing of helper files from BATS_LIB_PATH
+
+The existing functionality of load() is preserved:
+    1. Load helper files in the same directory the current testfile
+       resides in
+    2. Load helper files by absolute path
+
+Additionally an environment variable BATS_LIB_PATH can be defined to
+be source helper files from.
+
+If BATS_LIB_PATH is empty the following locations are used:
+    1. $HOME/.bats/lib
+       Allows users to manage helper libraries themselves, similar to
+       python/ruby/...
+    2. /usr/lib/bats
+       Allows to install helper libraries via a package manager.
+
+The first entry allows for a helper library within the project
+---
+ libexec/bats-exec-test | 38 +++++++++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
+
+diff --git a/libexec/bats-exec-test b/libexec/bats-exec-test
+index 8f3bd51..519fcd1 100755
+--- a/libexec/bats-exec-test
++++ b/libexec/bats-exec-test
+@@ -33,18 +33,38 @@ load() {
+   local name="$1"
+   local filename
+ 
+-  if [ "${name:0:1}" = "/" ]; then
+-    filename="${name}"
+-  else
+-    filename="$BATS_TEST_DIRNAME/${name}.bash"
++  # Argument is absolute, verify that the path exists and return after
++  # sourcing
++  if [[ "${name:0:1}" == "/" ]]; then
++    filename=$name
++
++    if [[ ! -f "$filename" ]]; then
++      echo "bats: $filename does not exist" >&2
++      exit 1
++    fi
++
++    source "$filename"
++    return
+   fi
+ 
+-  [ -f "$filename" ] || {
+-    echo "bats: $filename does not exist" >&2
+-    exit 1
+-  }
++  # Set libpath with directory of current test file
++  # Defaults to BATS_LIB_PATH e.g. for testing
++  local libpath="${BATS_LIB_PATH:-$HOME/.bats/lib:/usr/lib/bats}"
++  libpath="$BATS_TEST_DIRNAME:$libpath"
++
++  # Test for library file in each libpath, source and return if it
++  # exists
++  for part in ${libpath//:/ }; do
++    filename="$part/$name.bash"
+ 
+-  source "${filename}"
++    if [[ -f "$filename" ]]; then
++      source "$filename"
++      return
++    fi
++  done
++
++  echo "bats: No file $name in BATS_LIB_PATH found" >&2
++  exit 1
+ }
+ 
+ run() {
+-- 
+2.11.1
+
