@@ -15,12 +15,12 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-cpp/yaml-cpp
-	dev-libs/boost
-	>=sys-libs/glibc-2.12
-	net-misc/curl
-	app-admin/augeas
-	>=dev-libs/leatherman-0.10.1
-	dev-util/pkgconfig"
+		dev-libs/boost
+		>=sys-libs/glibc-2.12
+		net-misc/curl
+		app-admin/augeas
+		>=dev-libs/leatherman-0.10.1
+		dev-util/pkgconfig"
 RDEPEND="${DEPEND}"
 
 src_configure() {
