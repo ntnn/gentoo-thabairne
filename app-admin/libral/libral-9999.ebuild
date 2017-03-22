@@ -20,8 +20,13 @@ DEPEND="dev-cpp/yaml-cpp
 		net-misc/curl
 		app-admin/augeas
 		>=dev-libs/leatherman-0.10.1
-		dev-util/pkgconfig"
-RDEPEND="${DEPEND}"
+		virtual/pkgconfig"
+RDEPEND="dev-cpp/yaml-cpp
+		dev-libs/boost
+		>=sys-libs/glibc-2.12
+		net-misc/curl
+		app-admin/augeas
+		>=dev-libs/leatherman-0.10.1"
 
 src_configure() {
 	local mycmakeargs=(
