@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>nelo@wallus.de</email>
+		<name>Nelo-T. Wallus</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">ztombol/bats-file</remote-id>
+	</upstream>
+	<longdescription lang="en">
+		bats-file is a helper library providing common filesystem related
+		assertions and helpers for Bats.
+
+		Assertions are functions that perform a test and output relevant
+		information on failure to help debugging. They return 1 on failure and
+		0 otherwise. Output, formatted for readability, is sent to the standard
+		error to make assertions usable outside of @test blocks too.
+	</longdescription>
+</pkgmetadata>

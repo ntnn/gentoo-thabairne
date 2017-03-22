@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>nelo@wallus.de</email>
+		<name>Nelo-T. Wallus</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">puppetlabs/libral</remote-id>
+	</upstream>
+	<longdescription lang="en">
+		Libral is a systems management library that makes it possible to query
+		and modify system resources (files, packages, services, etc.) through
+		a desired-state API.
+	</longdescription>
+</pkgmetadata>
