@@ -1,0 +1,86 @@
+From d8d52e7fb7db3bb996b72ff3f4e2e3631ec9ed77 Mon Sep 17 00:00:00 2001
+From: Nelo Wallus <nelo@wallus.de>
+Date: Wed, 22 Mar 2017 19:49:36 +0100
+Subject: [PATCH 2/3] Add test harness for various library loading methods
+
+---
+ test/fixtures/bats/load.bats                        | 21 +++++++++++++++++++++
+ .../bats/load_path/no_loader/no_loader.bash         |  3 +++
+ test/fixtures/bats/load_path/single_file.bash       |  3 +++
+ test/fixtures/bats/load_path/with_loader.bash       |  1 +
+ .../fixtures/bats/load_path/with_loader/a-file.bash |  3 +++
+ 5 files changed, 31 insertions(+)
+ create mode 100644 test/fixtures/bats/load_path/no_loader/no_loader.bash
+ create mode 100644 test/fixtures/bats/load_path/single_file.bash
+ create mode 100644 test/fixtures/bats/load_path/with_loader.bash
+ create mode 100644 test/fixtures/bats/load_path/with_loader/a-file.bash
+
+diff --git a/test/fixtures/bats/load.bats b/test/fixtures/bats/load.bats
+index 975b6b8..45d6f0a 100644
+--- a/test/fixtures/bats/load.bats
++++ b/test/fixtures/bats/load.bats
+@@ -1,6 +1,27 @@
+ [ -n "$HELPER_NAME" ] || HELPER_NAME="test_helper"
+ load "$HELPER_NAME"
+ 
++BATS_LIB_PATH="$BATS_TEST_DIRNAME/load_path" \
++    load "${HELPER_LIB_SINGLE_FILE:-single_file}"
++
++BATS_LIB_PATH="$BATS_TEST_DIRNAME/load_path" \
++    load "${HELPER_LIB_NO_LOADER:-no_loader}"
++
++BATS_LIB_PATH="$BATS_TEST_DIRNAME/load_path" \
++    load "${HELPER_LIB_WITH_LOADER:-with_loader}"
++
+ @test "calling a loaded helper" {
+   help_me
+ }
++
++@test "calling a library helper" {
++    lib_func
++}
++
++@test "calling a helper from library without loading file" {
++    no_loader
++}
++
++@test "calling a helper from library with loading file" {
++    with_loader
++}
+diff --git a/test/fixtures/bats/load_path/no_loader/no_loader.bash b/test/fixtures/bats/load_path/no_loader/no_loader.bash
+new file mode 100644
+index 0000000..2ee3506
+--- /dev/null
++++ b/test/fixtures/bats/load_path/no_loader/no_loader.bash
+@@ -0,0 +1,3 @@
++no_loader() {
++    true
++}
+diff --git a/test/fixtures/bats/load_path/single_file.bash b/test/fixtures/bats/load_path/single_file.bash
+new file mode 100644
+index 0000000..5a170e1
+--- /dev/null
++++ b/test/fixtures/bats/load_path/single_file.bash
+@@ -0,0 +1,3 @@
++lib_func() {
++    true
++}
+diff --git a/test/fixtures/bats/load_path/with_loader.bash b/test/fixtures/bats/load_path/with_loader.bash
+new file mode 100644
+index 0000000..ba4d78e
+--- /dev/null
++++ b/test/fixtures/bats/load_path/with_loader.bash
+@@ -0,0 +1 @@
++source "$(dirname ${BASH_SOURCE[0]})/with_loader/a-file.bash"
+diff --git a/test/fixtures/bats/load_path/with_loader/a-file.bash b/test/fixtures/bats/load_path/with_loader/a-file.bash
+new file mode 100644
+index 0000000..12fbd14
+--- /dev/null
++++ b/test/fixtures/bats/load_path/with_loader/a-file.bash
+@@ -0,0 +1,3 @@
++with_loader() {
++    true
++}
+-- 
+2.12.0
+

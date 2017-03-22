@@ -1,0 +1,45 @@
+From 451584a41b61b4fc3d69359c89f1e41a046a2edb Mon Sep 17 00:00:00 2001
+From: Nelo Wallus <nelo@wallus.de>
+Date: Wed, 22 Mar 2017 19:49:49 +0100
+Subject: [PATCH 3/3] Source all files of a library if no loading file exists
+
+---
+ libexec/bats-exec-test | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/libexec/bats-exec-test b/libexec/bats-exec-test
+index 519fcd1..49e2e2b 100755
+--- a/libexec/bats-exec-test
++++ b/libexec/bats-exec-test
+@@ -52,15 +52,24 @@ load() {
+   local libpath="${BATS_LIB_PATH:-$HOME/.bats/lib:/usr/lib/bats}"
+   libpath="$BATS_TEST_DIRNAME:$libpath"
+ 
+-  # Test for library file in each libpath, source and return if it
+-  # exists
+-  for part in ${libpath//:/ }; do
+-    filename="$part/$name.bash"
++  # Test for library in each libpath
++  for libdir in ${libpath//:/ }; do
++    dirname="$libdir/$name"
++    filename="$dirname.bash"
+ 
++    # Test for loading file of library
+     if [[ -f "$filename" ]]; then
+       source "$filename"
+       return
+     fi
++
++    # Test for library and source all files within
++    if [[ -d "$dirname" ]]; then
++        for libfile in $dirname/*.bash; do
++            source $libfile
++        done
++        return
++    fi
+   done
+ 
+   echo "bats: No file $name in BATS_LIB_PATH found" >&2
+-- 
+2.12.0
+
