@@ -12,7 +12,7 @@ default: $(MANIFESTS)
 	# reexcutes the recipe each time.
 	cd $(@D); repoman manifest; touch Manifest
 
-commit:
+commit: $(MANIFESTS)
 	repoman full
 	repoman commit
 
