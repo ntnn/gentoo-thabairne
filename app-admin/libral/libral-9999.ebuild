@@ -5,7 +5,6 @@ EAPI=6
 
 inherit git-r3 cmake-utils
 
-
 DESCRIPTION="A native Resource Abstraction Layer"
 HOMEPAGE="https://github.com/puppetlabs/libral"
 EGIT_REPO_URI="https://github.com/puppetlabs/libral"
