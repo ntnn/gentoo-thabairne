@@ -46,5 +46,5 @@ src_install() {
 	dodir /usr/share/libral
 	mv "${S}/data" /usr/share/libral
 
-	dodoc CHANGELOG.md CONTRIBUTING.md HACKING.md LICENSE README.md
+	dodoc CHANGELOG.md CONTRIBUTING.md HACKING.md README.md
 }
