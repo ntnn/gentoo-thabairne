@@ -12,7 +12,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+bats_lib_path"
 
-DEPEND="app-shells/bash"
+DEPEND="app-shells/bash:0"
 RDEPEND="${DEPEND}"
 
 src_prepare() {

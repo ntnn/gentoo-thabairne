@@ -13,7 +13,7 @@ LICENSE="CC0-1.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="app-shells/bash
+DEPEND="app-shells/bash:0
 		dev-util/bats[bats_lib_path]
 		dev-util/bats-support"
 RDEPEND="${DEPEND}"

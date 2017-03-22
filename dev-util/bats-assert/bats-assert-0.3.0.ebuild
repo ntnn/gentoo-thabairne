@@ -12,7 +12,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="app-shells/bash
+DEPEND="app-shells/bash:0
 		dev-util/bats[bats_lib_path]
 		dev-util/bats-support"
 RDEPEND="${DEPEND}"
