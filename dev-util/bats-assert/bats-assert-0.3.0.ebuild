@@ -17,7 +17,14 @@ DEPEND="app-shells/bash
 		dev-util/bats-support"
 RDEPEND="${DEPEND}"
 
+src_test() {
+	bats test
+}
+
 src_install() {
 	insinto "/usr/lib/bats/${PN}"
 	doins src/*
+
+	dodoc CHANGELOG.md
+	dodoc README.md
 }
