@@ -3,6 +3,8 @@
 
 EAPI=6
 
+inherit autotools
+
 COMMITHASH="0645b2c833e4ca956970cc96fab32a1b04c0c55c"
 
 DESCRIPTION="Exuberant Ctags creates tags files for code browsing in editors"
@@ -33,7 +35,8 @@ DEPEND="
 
 src_prepare() {
 	default
-	./autogen.sh || die
+	./misc/dist-test-cases > makefiles/test-cases.mak
+	eautoreconf
 }
 
 src_configure() {
