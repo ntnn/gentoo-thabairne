@@ -23,6 +23,7 @@ src_prepare() {
 		epatch "${FILESDIR}/${PV}/0002-Add-test-harness-for-various-library-loading-methods.patch"
 		epatch "${FILESDIR}/${PV}/0003-Source-all-files-of-a-library-if-no-loading-file-exi.patch"
 	fi
+	default
 }
 
 src_test() {
