@@ -41,7 +41,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 PLOCALES="de el fr it ja nl ru sr sv tr"
-IUSE="+daemon nls test"
+IUSE="+daemon +dnsmasq nls test"
 
 # IUSE and PLOCALES must be defined before l10n inherited
 inherit bash-completion-r1 golang-build l10n linux-info systemd user golang-vcs-snapshot
@@ -65,7 +65,9 @@ RDEPEND="
 	daemon? (
 		app-arch/xz-utils
 		app-emulation/lxc[seccomp]
-		net-dns/dnsmasq[dhcp,ipv6]
+		dnsmasq? (
+			net-dns/dnsmasq[dhcp,ipv6]
+		)
 		net-misc/rsync[xattr]
 		sys-apps/iproute2[ipv6]
 		sys-fs/squashfs-tools
