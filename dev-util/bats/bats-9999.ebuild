@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit git-r3
+inherit git-r3 epatch
 
 DESCRIPTION="Bash Automated Testing System"
 HOMEPAGE="https://github.com/sstephenson/bats"
