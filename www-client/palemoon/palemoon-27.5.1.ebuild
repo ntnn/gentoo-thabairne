@@ -162,6 +162,11 @@ pkg_postinst() {
 	einfo "Pale Moon only supports building with gcc4, which Gentoo does not support."
 	einfo "Should you encounter any crashes, extensive resource usage etc.pp. open a"
 	einfo "bug in the gentoo bug tracker before going to upstream."
+
+	if ! use gtk2; then
+		ewarn "Pale Moon does not work well with gtk3 at the moment. Should you experience"
+		ewarn "issues please check if these also exist when building against gtk2."
+	fi
 }
 
 pkg_postrm() {
