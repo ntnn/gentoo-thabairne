@@ -158,6 +158,10 @@ src_install() {
 pkg_postinst() {
 	gnome2_icon_cache_update
 	xdg_desktop_database_update
+
+	einfo "Pale Moon only supports building with gcc4, which Gentoo does not support."
+	einfo "Should you encounter any crashes, extensive resource usage etc.pp. open a"
+	einfo "bug in the gentoo bug tracker before going to upstream."
 }
 
 pkg_postrm() {
