@@ -43,7 +43,7 @@ KEYWORDS="~amd64 ~x86"
 # cairo-gtk3 is incompatible with the in-tree cairo
 IUSE="+official-branding sandbox content-sandbox devtools
 	+shared-js alsa +system-icu system-zlib system-bzip2 system-webp
-	gtk3"
+	gtk3 -jemalloc"
 
 REQUIRED_USE="content-sandbox? ( sandbox )
 	gtk3? ( system-cairo )
@@ -111,13 +111,18 @@ src_configure() {
 	mozconfig_annotate "Pale Moon default" --enable-release
 	mozconfig_annotate "Pale Moon default" --disable-installer
 	mozconfig_annotate "Pale Moon default" --disable-updater
+	# Enabling replace-malloc is not required as it only adds code to
+	# replace the allocator at runtime
+	mozconfig_annotate "Pale Moon default" --disable-replace-malloc
+
+	mozconfig_use_enable jemalloc
+	mozconfig_use_enable jemalloc jemalloc-lib
 
 	mozconfig_use_enable official-branding
 
 	mozconfig_use_with system-zlib
 	mozconfig_use_with system-bzip2 system-bz2
 	mozconfig_use_with system-webp
-	mozconfig_use_enable system-cairo
 
 	mozconfig_use_enable devtools
 	mozconfig_use_enable devtools devtools-perf
