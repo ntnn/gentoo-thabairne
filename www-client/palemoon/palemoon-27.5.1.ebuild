@@ -159,9 +159,12 @@ pkg_postinst() {
 	gnome2_icon_cache_update
 	xdg_desktop_database_update
 
-	einfo "Pale Moon only supports building with gcc4, which Gentoo does not support."
-	einfo "Should you encounter any crashes, extensive resource usage etc.pp. open a"
-	einfo "bug in the gentoo bug tracker before going to upstream."
+	einfo "DO NOT open an issue with upstream when encountering issues using Pale"
+	einfo "Moon builds from this ebuild. Upstream DOES NOT support building with"
+	einfo ">=gcc-5."
+	einfo "Instead open an issue in the Gentoo bug tracker. The maintainers will"
+	einfo "inspect the issue and coordinate with upstream if it isn't a >=gcc-5"
+	einfo "related issue."
 
 	if ! use gtk2; then
 		ewarn "Pale Moon does not work well with gtk3 at the moment. Should you experience"
