@@ -41,10 +41,14 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 # cairo-gtk3 is incompatible with the in-tree cairo
-IUSE="+official-branding sandbox content-sandbox +system-cairo"
+IUSE="+official-branding sandbox content-sandbox devtools
+	+shared-js alsa +system-icu system-zlib system-bzip2 system-webp
+	gtk3"
 
 REQUIRED_USE="content-sandbox? ( sandbox )
-	!gtk2? ( system-cairo )
+	gtk3? ( system-cairo )
+	^^ ( alsa pulseaudio )
+	^^ ( gtk2 gtk3 )
 "
 
 PATCHES=(
@@ -59,6 +63,9 @@ RDEPEND="
 	>=sys-libs/glibc-2.23-r4
 	x11-libs/pango
 	system-sqlite? ( dev-db/sqlite[secure-delete] )
+	system-zlib? ( sys-libs/zlib )
+	system-bzip2? ( app-arch/bzip2 )
+	system-webp? ( media-libs/libwebp )
 "
 
 DEPEND="${RDEPEND}
@@ -97,11 +104,31 @@ src_configure() {
 
 	mozconfig_config
 
-	# in-tree cairo is incompatible with cairo-gtk3 toolkit
-	# mozconfig_use_enable !gtk2 system-cairo
+	# Defaults from Pale Moon release builds
+	mozconfig_annotate "Pale Moon default" --enable-application=browser
+	echo "mk_add_options MOZ_CO_PROJECT=browser" >> "${S}"/.mozconfig \
+		|| die
+	mozconfig_annotate "Pale Moon default" --enable-release
+	mozconfig_annotate "Pale Moon default" --disable-installer
+	mozconfig_annotate "Pale Moon default" --disable-updater
+
+	mozconfig_use_enable official-branding
+
+	mozconfig_use_with system-zlib
+	mozconfig_use_with system-bzip2 system-bz2
+	mozconfig_use_with system-webp
+	mozconfig_use_enable system-cairo
+
+	mozconfig_use_enable devtools
+	mozconfig_use_enable devtools devtools-perf
+
+	mozconfig_use_enable shared-js
+
+	mozconfig_use_enable alsa
 
 	mozconfig_use_enable sandbox
 	mozconfig_use_enable content-sandbox
+
 	echo "mk_add_options MOZ_OBJDIR=${BUILD_OBJ_DIR}" >> "${S}"/.mozconfig \
 		|| die
 
@@ -167,8 +194,14 @@ pkg_postinst() {
 	einfo "related issue."
 
 	if ! use gtk2; then
-		ewarn "Pale Moon does not work well with gtk3 at the moment. Should you experience"
-		ewarn "issues please check if these also exist when building against gtk2."
+		ewarn "Pale Moon does not work well with gtk3 at the moment. Should you"
+		ewarn "experience issues please check if these also exist when building"
+		ewarn "against gtk2."
+	fi
+
+	if ! use system-icu; then
+		ewarn "Not building against system icu may cause connection errors when"
+		ewarn "when downloading extensions or loading pages."
 	fi
 }
 

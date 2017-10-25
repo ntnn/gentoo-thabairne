@@ -5,17 +5,19 @@
 		<name>Nelo-Thara Wallus</name>
 		<email>nelo@wallus.de</email>
 	</maintainer>
-	<longdescription lang="en">
-	</longdescription>
 	<use>
 		<flag name="official-branding">Build with official branding</flag>
 		<flag name="gtk2">Use the cairo-gtk2 rendering engine</flag>
+		<flag name="gtk3">Use the cairo-gtk3 rendering engine</flag>
 		<flag name="jemalloc">Enable or disable jemalloc</flag>
 
 		<flag name="custom-optimization">Build with user-specified compiler optimizations from CFLAGS (unsupported)</flag>
 
 		<flag name="sandbox">Enable sandboxing support</flag>
 		<flag name="content-sandbox">Enable sandboxing support for content-processes</flag>
+
+		<flag name="devtools">Enable Mozilla Developer Tools</flag>
+		<flag name="shared-js">Create a shared JavaScript library</flag>
 
 		<flag name="system-cairo">
 			Use the system-wide <pkg>x11-libs/cairo</pkg> instead of bundled.
@@ -37,6 +39,15 @@
 		</flag>
 		<flag name="system-sqlite">
 			Use the system-wide <pkg>dev-db/sqlite</pkg> installation with secure-delete enabled
+		</flag>
+		<flag name="system-zlib">
+			Use the system-wide <pkg>sys-libs/zlib</pkg> instead of bundled.
+		</flag>
+		<flag name="system-bzip2">
+			Use the system-wide <pkg>app-arch/bzip2</pkg> instead of bundled.
+		</flag>
+		<flag name="system-webp">
+			Use the system-wide <pkg>media-libs/libwebp</pkg> instead of bundled.
 		</flag>
 	</use>
 </pkgmetadata>
