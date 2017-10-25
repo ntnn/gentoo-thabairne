@@ -138,7 +138,7 @@ src_configure() {
 src_compile() {
 	MOZ_MAKE_FLAGS="${MAKEOPTS}" \
 		SHELL="${SHELL:-${EPREFIX%/}/bin/bash}" \
-		emake -f client.mk realbuild
+		emake -f client.mk build
 }
 
 src_install() {
