@@ -42,8 +42,7 @@ KEYWORDS="~amd64 ~x86"
 
 # cairo-gtk3 is incompatible with the in-tree cairo
 IUSE="+official-branding sandbox content-sandbox devtools
-	+shared-js alsa +system-icu system-zlib system-bzip2 system-webp
-	gtk3 -jemalloc"
+	+shared-js alsa +system-icu gtk3 -jemalloc"
 
 REQUIRED_USE="content-sandbox? ( sandbox )
 	gtk3? ( system-cairo )
@@ -60,12 +59,12 @@ PATCHES=(
 )
 
 RDEPEND="
+	app-arch/bzip2
+	media-libs/libwebp
 	>=sys-libs/glibc-2.23-r4
+	sys-libs/zlib
 	x11-libs/pango
 	system-sqlite? ( dev-db/sqlite[secure-delete] )
-	system-zlib? ( sys-libs/zlib )
-	system-bzip2? ( app-arch/bzip2 )
-	system-webp? ( media-libs/libwebp )
 "
 
 DEPEND="${RDEPEND}
@@ -120,9 +119,7 @@ src_configure() {
 
 	mozconfig_use_enable official-branding
 
-	mozconfig_use_with system-zlib
-	mozconfig_use_with system-bzip2 system-bz2
-	mozconfig_use_with system-webp
+	mozconfig_annotate "Gentoo default" --with-system-webp
 
 	mozconfig_use_enable devtools
 	mozconfig_use_enable devtools devtools-perf
