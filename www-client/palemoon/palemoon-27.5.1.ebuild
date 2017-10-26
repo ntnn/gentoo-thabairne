@@ -125,7 +125,6 @@ src_configure() {
 	mozconfig_use_with system-webp
 
 	mozconfig_use_enable devtools
-	mozconfig_use_enable devtools devtools-perf
 
 	mozconfig_use_enable shared-js
 
