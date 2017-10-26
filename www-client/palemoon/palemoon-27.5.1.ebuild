@@ -202,7 +202,7 @@ pkg_postinst() {
 
 	if ! use system-icu; then
 		ewarn "Not building against system icu may cause connection errors when"
-		ewarn "when downloading extensions or loading pages."
+		ewarn "downloading extensions or loading pages."
 	fi
 }
 
