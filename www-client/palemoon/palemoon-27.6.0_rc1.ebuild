@@ -14,28 +14,10 @@ if [[ "${PV}" =~ .*rc.* ]]; then
 	MY_PV="${PV%%_rc*}-RC${PV##*_rc}"
 fi
 
-MOZ_FTP_URI="http://relmirror.palemoon.org/"
-MOZ_LANGPACK_PREFIX="langpacks/${PV%%.*}.x/"
-MOZ_LANGS=(
-	cs
-	de
-	en-GB
-	es-AR
-	es-ES
-	es-MX
-	fr
-	hu
-	it
-	ko
-	nl
-	pl
-	pt-BR
-	pt-PT
-	ru
-	sv-SE
-	tr
-	zh-CN
-)
+MY_LANGPACK_PV="${PV%%_rc*}_RC2"
+MOZ_FTP_URI="https://github.com/"
+MOZ_LANGPACK_PREFIX="JustOff/pale-moon-localization/releases/download/${MY_LANGPACK_PV}/"
+MOZ_LANGS=(ar bg cs da de el en-GB es-AR es-ES es-MX fi fr gl hr hu is it ja kn ko nl pl pt-BR pt-PT ro ru sk sl sr sv-SE tl tr uk vi zh-CN zh-TW)
 
 DESCRIPTION="Open Source, Goanna-based web browser focusing on efficiency and ease of use."
 HOMEPAGE="https://www.palemoon.org/"
