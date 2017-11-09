@@ -6,14 +6,12 @@ EAPI=6
 MY_PN="Pale-Moon"
 
 MY_PV="${PV}_Release"
-MY_LANGPACK_PV="${PV}"
 if [[ "${PV}" =~ .*rc.* ]]; then
 	# PV='27.6.0_rc1'
 	# -> left='27.6.0'
 	# -> right='RC1'
 	# -> MY_PV='27.6.0-RC1'
 	MY_PV="${PV%%_rc*}-RC${PV##*_rc}"
-	MY_LANGPACK_PV="${PV%%_rc*}_RC3"
 fi
 
 MY_LANGPACK_PV="${PV%%_rc*}_RC3"
