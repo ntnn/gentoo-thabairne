@@ -150,10 +150,10 @@ index 4b3b9fcfd..219b56139 100644
 +
  #endif  // if mozilla_${HEADER}_h
 diff --git a/memory/mozalloc/mozalloc.h b/memory/mozalloc/mozalloc.h
-index 2b370ec25..06a700245 100644
+index 2b370ec25..668f3c0ce 100644
 --- a/memory/mozalloc/mozalloc.h
 +++ b/memory/mozalloc/mozalloc.h
-@@ -12,10 +12,17 @@
+@@ -12,10 +12,20 @@
   * https://bugzilla.mozilla.org/show_bug.cgi?id=427099
   */
  
@@ -167,6 +167,9 @@ index 2b370ec25..06a700245 100644
 +// in gfx/graphite2/src/inc/UtfCodec.h somehow ends up picking the wrong abs()
 +#  include <cstdlib>
 +#  include <cstring>
++   using ::std::strtol;
++   using ::std::rand;
++   using ::std::srand;
 +#else
 +#  include <stdlib.h>
 +#  include <string.h>
