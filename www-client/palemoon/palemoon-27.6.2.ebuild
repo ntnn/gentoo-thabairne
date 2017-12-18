@@ -28,7 +28,7 @@ SRC_URI="https://github.com/MoonchildProductions/${MY_PN}/archive/${MY_PV}.tar.g
 
 MOZCONFIG_OPTIONAL_GTK2ONLY="enabled"
 
-inherit mozconfig-v6.52 mozextension mozlinguas-v2 gnome2-utils xdg-utils
+inherit mozconfig-v6.52 mozextension mozlinguas-v2 gnome2-utils xdg-utils toolchain-funcs
 
 LICENSE="MPL-2.0"
 SLOT="0"
@@ -81,6 +81,10 @@ src_unpack() {
 
 src_prepare() {
 	default
+
+	if [[ $(gcc-major-version) -eq 7 ]]; then
+		eapply "${FILESDIR}/${PN}-27.6.2-gcc7-fix_bad_allox_nothrow_t.patch"
+	fi
 
 	# Ensure that our plugins dir is enabled as default
 	sed -e "s:/usr/lib/mozilla/plugins:/usr/lib/nsbrowser/plugins:" \
