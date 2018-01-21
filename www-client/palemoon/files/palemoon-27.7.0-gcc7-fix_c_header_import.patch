@@ -1,0 +1,24 @@
+--- a/media/libmkv/WebMElement.c	2018-01-14 16:40:00.491420909 +0100
++++ b/media/libmkv/WebMElement.c	2018-01-14 16:39:52.335543589 +0100
+@@ -8,9 +8,18 @@
+
+ #include "EbmlIDs.h"
+ #include "WebMElement.h"
+-#include <stdio.h>
+-#include <stdint.h>
+-#include <stdlib.h>
++#if defined(__cplusplus)
++#  include <cstdio>
++#  include <cstdint>
++#  include <cstdlib>
++  using ::std::strtol;
++  using ::std::rand;
++  using ::std::srand;
++#else
++#  include <stdio.h>
++#  include <stdint.h>
++#  include <stdlib.h>
++#endif
+ #include <time.h>
+
+ #define kVorbisPrivateMaxSize  4000
