@@ -94,6 +94,10 @@ src_configure() {
 		-e '/MOZ_JEMALLOC4/d' \
 		"${S}/.mozconfig"
 
+	# Fix autotools not finding xargs
+	echo "mk_add_options XARGS=/usr/bin/xargs" \
+		>> "${S}/.mozconfig"
+
 	# Defaults from Basilisk release builds
 	mozconfig_annotate "Basilisk default" --enable-application=browser
 	echo "mk_add_options MOZ_CO_PROJECT=browser" >> "${S}"/.mozconfig \
