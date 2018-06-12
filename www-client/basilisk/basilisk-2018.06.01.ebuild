@@ -12,30 +12,22 @@ SRC_URI="https://github.com/MoonchildProductions/${MY_PN}/archive/${MY_PV}.tar.g
 
 MOZCONFIG_OPTIONAL_GTK2ONLY="enabled"
 
-inherit mozconfig-v6.52 mozextension gnome2-utils xdg-utils
+inherit mozcoreconf-v5 mozextension gnome2-utils xdg-utils
 
 LICENSE="MPL-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 # cairo-gtk3 is incompatible with the in-tree cairo
-IUSE="-official-branding sandbox content-sandbox devtools
-	+shared-js alsa +system-icu gtk3 -jemalloc
-	+system-cairo
+IUSE="custom-optimization
+	sandbox content-sandbox devtools
+	+shared-js -gtk2 +gtk3 -jemalloc
+	+system-cairo +system-ffi +system-hunspell
 "
 
 REQUIRED_USE="content-sandbox? ( sandbox )
 	gtk3? ( system-cairo )
-	^^ ( alsa pulseaudio )
 	^^ ( gtk2 gtk3 )
-	official-branding? (
-		!system-cairo
-		!system-icu
-		!system-jpeg
-		!system-libevent
-		!system-libvpx
-		!system-sqlite
-	)
 "
 
 PATCHES=(
@@ -51,7 +43,9 @@ RDEPEND="
 	>=sys-libs/glibc-2.23-r4
 	sys-libs/zlib
 	x11-libs/pango
-	system-sqlite? ( dev-db/sqlite[secure-delete] )
+	system-ffi? ( dev-libs/libffi )
+	system-cairo? ( x11-libs/cairo )
+	system-hunspell? ( app-text/hunspell )
 "
 
 DEPEND="${RDEPEND}
@@ -87,13 +81,6 @@ src_prepare() {
 src_configure() {
 	mozconfig_init
 
-	mozconfig_config
-	sed -i \
-		-e '/intl-api/d' \
-		-e '/system-harfbuzz/d' \
-		-e '/MOZ_JEMALLOC4/d' \
-		"${S}/.mozconfig"
-
 	# Fix autotools not finding xargs
 	echo "mk_add_options XARGS=/usr/bin/xargs" \
 		>> "${S}/.mozconfig"
@@ -102,25 +89,43 @@ src_configure() {
 	mozconfig_annotate "Basilisk default" --enable-application=browser
 	echo "mk_add_options MOZ_CO_PROJECT=browser" >> "${S}"/.mozconfig \
 		|| die
+
 	mozconfig_annotate "Basilisk default" --enable-release
 	mozconfig_annotate "Basilisk default" --disable-updater
+
+	mozconfig_annotate "Basilisk default" --js-shell
+
+	mozconfig_use_enable jemalloc
 	# Enabling replace-malloc is not required as it only adds code to
 	# replace the allocator at runtime
 	mozconfig_annotate "Basilisk default" --disable-replace-malloc
 
-	mozconfig_use_enable jemalloc
-
-	mozconfig_use_enable official-branding
+	mozconfig_annotate "Gentoo default" --disable-debug
 
 	mozconfig_use_enable devtools
+	mozconfig_use_enable devtools js-shell
+	mozconfig_use_enable devtools more-deterministic
 
+	# shared js requires exported js, exporting js without enabling
+	# shared js doesn't make sense.
 	mozconfig_use_enable shared-js
 	mozconfig_use_enable shared-js export-js
 
-	mozconfig_use_enable alsa
-
 	mozconfig_use_enable sandbox
 	mozconfig_use_enable content-sandbox
+
+	mozconfig_use_with system-ffi
+	mozconfig_use_enable system-hunspell
+
+	mozconfig_use_with system-cairo
+	if use gtk3; then
+		mozconfig_annotate "+gtk3" --enable-default-toolkit=cairo-gtk3
+	elif use gtk2; then
+		mozconfig_annotate "+gtk2" --enable-default-toolkit=cairo-gtk2
+	else
+		die "One of gtk3 or gtk2 must be enabled"
+	fi
+
 
 	echo "mk_add_options MOZ_OBJDIR=${BUILD_OBJ_DIR}" >> "${S}"/.mozconfig \
 		|| die

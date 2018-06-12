@@ -6,7 +6,6 @@
 		<email>nelo@wallus.de</email>
 	</maintainer>
 	<use>
-		<flag name="official-branding">Build with official branding</flag>
 		<flag name="gtk2">Use the cairo-gtk2 rendering engine</flag>
 		<flag name="gtk3">Use the cairo-gtk3 rendering engine</flag>
 		<flag name="jemalloc">Enable or disable jemalloc</flag>
@@ -19,26 +18,14 @@
 		<flag name="devtools">Enable Mozilla Developer Tools</flag>
 		<flag name="shared-js">Create a shared JavaScript library</flag>
 
+		<flag name="system-ffi">
+			Use the system-wide <pkg>dev-libs/libffi</pkg> instead of bundled.
+		</flag>
 		<flag name="system-cairo">
 			Use the system-wide <pkg>x11-libs/cairo</pkg> instead of bundled.
 		</flag>
-		<flag name="system-harfbuzz">
-			Use the system-wide <pkg>media-libs/harfbuzz</pkg> and <pkg>media-gfx/graphite2</pkg> instead of bundled.
-		</flag>
-		<flag name="system-icu">
-			Use the system-wide <pkg>dev-libs/icu</pkg> instead of bundled.
-		</flag>
-		<flag name="system-jpeg">
-			Use the system-wide <pkg>media-libs/libjpeg-turbo</pkg> instead of bundled.
-		</flag>
-		<flag name="system-libevent">
-			Use the system-wide <pkg>dev-libs/libevent</pkg> instead of bundled.
-		</flag>
-		<flag name="system-libvpx">
-			Use the system-wide <pkg>media-libs/libvpx</pkg> instead of bundled.
-		</flag>
-		<flag name="system-sqlite">
-			Use the system-wide <pkg>dev-db/sqlite</pkg> installation with secure-delete enabled
+		<flag name="system-hunspell">
+			Use the system-wide <pkg>app-test/hunspell</pkg> instead of bundled.
 		</flag>
 	</use>
 </pkgmetadata>
