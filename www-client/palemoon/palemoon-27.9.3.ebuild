@@ -37,7 +37,7 @@ KEYWORDS="~amd64 ~x86"
 # cairo-gtk3 is incompatible with the in-tree cairo
 IUSE="-official-branding sandbox content-sandbox devtools
 	+shared-js alsa +system-icu gtk3 -jemalloc
-	+system-cairo
+	+system-cairo +system-nspr
 "
 
 REQUIRED_USE="content-sandbox? ( sandbox )
@@ -52,6 +52,7 @@ REQUIRED_USE="content-sandbox? ( sandbox )
 		!system-libevent
 		!system-libvpx
 		!system-sqlite
+		!system-nspr
 	)
 "
 
@@ -61,6 +62,7 @@ PATCHES=(
 
 	"${FILESDIR}/${PN}-27.5.1-gentoo_install_dirs.patch"
 	"${FILESDIR}/${PN}-27.5.1-gentoo_preferences.patch"
+	"${FILESDIR}/${PN}-27.9.3-fix_mozalloc_in_stl_wrappers.patch"
 )
 
 RDEPEND="
@@ -138,9 +140,13 @@ src_configure() {
 		|| die
 
 	mozconfig_final
+
+	emake -f client.mk configure
 }
 
 src_compile() {
+	append-cxxflags -std=gnu++98
+
 	MOZ_MAKE_FLAGS="${MAKEOPTS}" \
 		SHELL="${SHELL:-${EPREFIX%/}/bin/bash}" \
 		emake -f client.mk build

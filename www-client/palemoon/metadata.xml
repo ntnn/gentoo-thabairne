@@ -40,5 +40,8 @@
 		<flag name="system-sqlite">
 			Use the system-wide <pkg>dev-db/sqlite</pkg> installation with secure-delete enabled
 		</flag>
+		<flag name="system-nspr">
+			Use the system-wide <pkg>dev-libs/nspr</pkg> instead of bundled.
+		</flag>
 	</use>
 </pkgmetadata>
