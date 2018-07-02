@@ -30,6 +30,6 @@ DOCS=(
 )
 
 src_install() {
-	emake PREFIX="/usr" DESTDIR="${D}" install
+	emake PREFIX="${EPREFIX}/usr" DESTDIR="${D}" install
 	einstalldocs
 }
