@@ -16,7 +16,8 @@ KEYWORDS="~amd64 ~x86"
 
 DEPEND="
 	sys-devel/libtool
-	virtual/pkgconfig"
+	virtual/pkgconfig
+"
 
 RDEPEND="!dev-libs/libvterm-neovim"
 
@@ -34,5 +35,5 @@ src_install() {
 		DESTDIR="${D}" install
 	prune_libtool_files
 
-	dodoc doc/*
+	dodoc -r doc/
 }
